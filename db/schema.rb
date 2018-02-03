@@ -16,16 +16,13 @@ ActiveRecord::Schema.define(version: 20180203082014) do
   enable_extension "plpgsql"
 
   create_table "locations", force: :cascade do |t|
-    t.string "address", null: false
-    t.float "lat"
-    t.float "lon"
+    t.float "lat", null: false
+    t.float "lon", null: false
     t.boolean "is_trash", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["address"], name: "index_locations_on_address", unique: true
     t.index ["is_trash"], name: "index_locations_on_is_trash"
-    t.index ["lat"], name: "index_locations_on_lat"
-    t.index ["lon"], name: "index_locations_on_lon"
+    t.index ["lat", "lon"], name: "index_locations_on_lat_and_lon", unique: true
   end
 
 end
