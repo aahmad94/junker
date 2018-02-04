@@ -22,3 +22,5 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+[starting and stopping postgresql on mac](https://stackoverflow.com/questions/7975556/how-to-start-postgresql-server-on-mac-os-x)

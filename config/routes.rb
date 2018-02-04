@@ -8,5 +8,9 @@ Rails.application.routes.draw do
     defaults: { format: :json }
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  post 'webhook' => 'webhooks#handle_callback'
+  require 'sidekiq/web'
+	mount Sidekiq::Web => '/sidekiq'
 end
 
