@@ -1,4 +1,2 @@
-json.extract! location, :id, 
-                        :lat,
-                        :lon,
-                        :is_trash
+json.extract! location, :lat,
+                        :lon
