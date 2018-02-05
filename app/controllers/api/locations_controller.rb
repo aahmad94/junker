@@ -22,16 +22,34 @@ class Api::LocationsController < ApplicationController
   end 
 
   def route_coordinates
-    truck_coord = [params[:lat], params[:lon]]
-    bounds = calculate_bounds(truck_coord)
-    @locations = Location.where("lat > ? AND lat < ? AND lon > ? AND lon < ?", bounds[:lat_min], bounds[:lat_max], bounds[:lon_min], bounds[:lon_max])
-    render :index
+    # truck_coord = [params[:lat], params[:lon]]
+    truck_coords = params[:truck_coords] # array of tuples with lat/lon info fir truck location
+    bounds = [] # array of hashes with lat_min/lat_max/lon_min/lon_max bounds
+    truck_coords.each do |truck_coord| 
+      bounds << calculate_bounds(truck_coord)
+    end
+    # ret = {}
+    locations = []
+    bounds.each_index do |idx|
+      houses = Location.where("lat > ? AND lat < ? AND lon > ? AND lon < ?", bounds[idx][:lat_min], bounds[idx][:lat_max], bounds[idx][:lon_min], bounds[idx][:lon_max]).to_a
+      truck = truck_coords[idx]
+      truck_hash = Location.new(lat: truck[0], lon: truck[1])
+      # ret['truck'] = truck_hash
+      # ret['data'] = tuck.concat(houses)
+      locations << {truck: truck_hash, houses: houses}
+      # locations << houses
+    end
+    p "----LOCATIONS----"
+    p locations
+    @locations = locations  
+    # render :index
+    render :json => @locations
   end
 
   private 
   	def calculate_bounds(coord = [50.97452, 5.86605])      
 
-      uri = URI.parse("https://api.tomtom.com/routing/1/calculateReachableRange/#{coord[0]},#{coord[1]}/json?key=9jFqlnjOFua3WGH7neAbCktFIatGIp6D&fuelBudgetInLiters=0.33&constantSpeedConsumptionInLitersPerHundredkm=70,14")
+      uri = URI.parse("https://api.tomtom.com/routing/1/calculateReachableRange/#{coord[0]},#{coord[1]}/json?key=9jFqlnjOFua3WGH7neAbCktFIatGIp6D&fuelBudgetInLiters=0.6&constantSpeedConsumptionInLitersPerHundredkm=70,14")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE

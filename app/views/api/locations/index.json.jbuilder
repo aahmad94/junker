@@ -4,4 +4,8 @@
 #         # json.partial! 'api/locations/location', location: location
 #     end 
 # end 
-json.array! @locations, :lat, :lon
+@locations.each_index do |idx|
+    json.set! idx do 
+        json.array! @locations[idx], "lat", "lon"
+    end 
+end 
