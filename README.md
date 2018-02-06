@@ -1,26 +1,6 @@
-# README
+### DeveloperWeek Hackathon challenge to create an interface for on-demand garbage collection; utilized TomTom and Google Vision API for route info and trash detection, built with Rails, Android/Java, PostgreSQL. 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-[starting and stopping postgresql on mac](https://stackoverflow.com/questions/7975556/how-to-start-postgresql-server-on-mac-os-x)
+- Created entire Rails back-end; handled logic to return JSON to front-end end-
+point with database entries for locations with trash ready for pick-up within a
+three-mile perimeter of a truck’s location.
+- Tunnel via ngrok for front-end end-points
